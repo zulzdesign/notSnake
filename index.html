@@ -18,12 +18,54 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
+        /* Mobile controller styling */
+        .controller {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 999;
+        }
+
+        .controller button {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            margin: 5px;
+            border-radius: 10px;
+            background-color: #ddd;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        /* Show controller on small screens */
+        @media (max-width: 420px) {
+            .score {
+                font-size: 35px;
+            }
+            .controller {
+                display: block;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="score">0</div>
     <canvas id="gameBoard" width="200" height="200"></canvas>
+    <div class="controller">
+        <button id="up">↑</button>
+        <div>
+            <button id="left">←</button>
+            <button id="right">→</button>
+            <button id="down">↓</button>
+        </div>
+    </div>
+
 </body>
 
 <script>
@@ -113,7 +155,7 @@
         if (changingDirection) return;
         changingDirection = true;
 
-        const LEFT_KEY =37;
+        const LEFT_KEY = 37;
         const UP_KEY = 38;
         const RIGHT_KEY = 39;
         const DOWN_KEY = 40;
@@ -187,5 +229,34 @@
         return false;
     }
 
+    // Mobile button event listeners
+    document.getElementById("up").addEventListener("click", () => {
+        if (dy !== pixelSize) {
+            dx = 0;
+            dy = -pixelSize;
+        }
+    });
+
+    document.getElementById("down").addEventListener("click", () => {
+        if (dy !== -pixelSize) {
+            dx = 0;
+            dy = pixelSize;
+        }
+    });
+
+    document.getElementById("left").addEventListener("click", () => {
+        if (dx !== pixelSize) {
+            dx = -pixelSize;
+            dy = 0;
+        }
+    });
+
+    document.getElementById("right").addEventListener("click", () => {
+        if (dx !== -pixelSize) {
+            dx = pixelSize;
+            dy = 0;
+        }
+    });
 </script>
+
 </html>
